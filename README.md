@@ -1,0 +1,2 @@
+# bypass_win-linux
+一个可以在linux中运行的免杀脚本，将exe文件或elf文件转化为shellcode而后编译加载器来实现免杀
