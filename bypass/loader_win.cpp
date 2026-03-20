@@ -9,12 +9,23 @@ void xor_decrypt(unsigned char* data, unsigned int size, unsigned char key) {
     }
 }
 
-int main() {
-    const char* filename = "output.bin";
+int main(int argc, char* argv[]) {
+
     const unsigned char xorKey = 0xAA;
 
+    char basePath[] = ".\\out\\";
+    char filename[MAX_PATH] = "output.bin";
+
+    if (argc > 1) {
+        strncpy(filename, argv[1], MAX_PATH - 1);
+        filename[MAX_PATH - 1] = '\0';
+    }
+
+    char fullPath[MAX_PATH];
+    snprintf(fullPath, MAX_PATH, "%s%s", basePath, filename);
+
     HANDLE hFile = CreateFileA(
-        filename,
+        fullPath,
         GENERIC_READ,
         FILE_SHARE_READ,
         NULL,
@@ -24,7 +35,7 @@ int main() {
     );
 
     if (hFile == INVALID_HANDLE_VALUE) {
-        printf("[-] Cannot open %s (Error: %lu)\n", filename, GetLastError());
+        printf("[-] Cannot open %s (Error: %lu)\n", fullPath, GetLastError());
         return 1;
     }
 
